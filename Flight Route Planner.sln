@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flight Route Planner", "Flight Route Planner.vcxproj", "{05D90DD7-B37B-44B4-833E-2E6081ED0A4F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05D90DD7-B37B-44B4-833E-2E6081ED0A4F}.Debug|x64.ActiveCfg = Debug|x64
+		{05D90DD7-B37B-44B4-833E-2E6081ED0A4F}.Debug|x64.Build.0 = Debug|x64
+		{05D90DD7-B37B-44B4-833E-2E6081ED0A4F}.Debug|x86.ActiveCfg = Debug|Win32
+		{05D90DD7-B37B-44B4-833E-2E6081ED0A4F}.Debug|x86.Build.0 = Debug|Win32
+		{05D90DD7-B37B-44B4-833E-2E6081ED0A4F}.Release|x64.ActiveCfg = Release|x64
+		{05D90DD7-B37B-44B4-833E-2E6081ED0A4F}.Release|x64.Build.0 = Release|x64
+		{05D90DD7-B37B-44B4-833E-2E6081ED0A4F}.Release|x86.ActiveCfg = Release|Win32
+		{05D90DD7-B37B-44B4-833E-2E6081ED0A4F}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B73E5EA-63DC-4586-B0D6-1AD068AF6806}
+	EndGlobalSection
+EndGlobal
