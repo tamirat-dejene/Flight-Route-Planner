@@ -144,6 +144,66 @@ public:
 };
 ```
 ## The std::map<Airport, std::pair<double, std::list<Airport>>> dijkstra_Optimum(const char _param, const Airport& origin) Method
+This method returns a map where each airport is associated with a pair containing the optimum value (either distance or price) and the corresponding path from the specified `origin` airport.
+The variables:
+   - optimum: A map to store optimum values and paths.
+   - pq: A priority queue to prioritize paths with shorter distances or lower prices.
+Initialization of Optimum Values and Paths:
+   - ports: Get a list of all possible airports in the network.
+   - Initialize optimum values and paths in the optimum map. All optimum values are set to std::numeric_limits<double>::max() initially. (the largest possible #)
+   - Set the optimum value from the `origin` to itself as 0 in the `optimum` map and push it onto the priority queue.
+   - While the priority queue is not empty:
+     	 - Pop the top path from the priority queue.
+    	 - If a better path to the current airport has already been found, skip the current iteration.
+    	 - Else explore routes from the current airport.
+    	 - Update the optimum result if a better path is found, and push it onto the priority queue.
+   - End While Loop
+   - Return the map containing optimum values and paths.
+NB: The parameter _param is used to determine whether to optimize based on distance ('d') or price ('p').
+
+```
+std::map<Airport, std::pair<double, std::list<Airport>>> Airline::dijkstra_Optimum(const char _param, const Airport& origin) {
+
+	// stores the optimum values
+	std::map<Airport, std::pair<double, std::list<Airport>>> optimum;
+
+
+	std::priority_queue<std::pair<double, std::list<Airport>>, std::vector<std::pair<double, std::list<Airport>>>, std::greater<>> pq;
+
+	std::list<Airport> ports = allAirportEntries(origin);
+	for (const Airport& a : ports)
+		optimum[a] = { std::numeric_limits<double>::max(), {} };
+
+	optimum[origin] = { 0, {origin} };
+	pq.push({ 0, {origin} });
+
+	while (!pq.empty()) {
+		std::list<Airport> currentPath = pq.top().second;
+		Airport current = currentPath.back();
+
+		double currentValue = pq.top().first;
+		pq.pop();
+
+		if (currentValue > optimum[current].first)
+			continue;
+
+		for (const Route& route : port_network.at(current)) {
+			double newValue;
+			if (_param == 'p')
+				newValue = currentValue + route.getPrice();
+			else
+				newValue = currentValue + route.getDistance();
+
+			if (newValue < optimum[route.getDestination()].first) {
+				optimum[route.getDestination()] = { newValue, currentPath };
+				optimum[route.getDestination()].second.push_back(route.getDestination());
+				pq.push({ newValue, optimum[route.getDestination()].second });
+			}
+		}
+	}
+	return optimum;
+}
+```
 ## Demo
 
 To use the Flight Route Planner:
