@@ -143,7 +143,8 @@ public:
 	
 };
 ```
-## How to Use
+## The std::map<Airport, std::pair<double, std::list<Airport>>> dijkstra_Optimum(const char _param, const Airport& origin) Method
+## Demo
 
 To use the Flight Route Planner:
 1. Initialize airports and routes, locations, `Airline` class.
@@ -151,5 +152,44 @@ To use the Flight Route Planner:
 3. Call the `dijkstra` method with a source airport to find the shortest distances, optimal price and other method.
 4. Retrieve the results and utilize them in your application.
 
-## Example
-``` coming sooon ```
+```
+#include <iostream>
+#include <map>
+
+#include "queue.cpp"
+#include "time.h"
+#include "location.h"
+#include "airport.h"
+#include "airline.h"
+int main() {
+	Airport ports[] = { Airport("ET0", "Bole Int. Airport", Location("Ethiopia", "Addis Ababa")),
+						Airport("ET1", "Bahirdar Airport", Location("Ethiopia", "Bahirdar")),
+						Airport("ET2", "Mekele Airport", Location("Ethiopia", "Mekele")),
+						Airport("ET3", "Gonder Airport", Location("Ethiopia", "Gonder")),
+						Airport("ET4", "Jimma Airport", Location("Ethiopia", "Jimma")) };
+	Airline airline("Ethiopian Airlines");
+	
+	airline.addAirport(ports[0]);
+	airline.addAirport(ports[1]);
+	airline.addAirport(ports[2]);
+	airline.addAirport(ports[3]);
+	airline.addAirport(ports[4]);
+	
+	Time t(2, 30);	// hr:min the time it takes for the flight
+	Time t1(1, 30);
+	Time t2(3, 30);
+	Time t3(1, 00);
+	
+	airline.addRoute(ports[0], ports[1], t, 550, 3500);
+	airline.addRoute(ports[0], ports[2], t1, 450, 2000);
+	airline.addRoute(ports[1], ports[2], t2, 300, 3500);
+	airline.addRoute(ports[1], ports[4], t1, 450, 2000);
+	airline.addRoute(ports[2], ports[3], t3, 100, 5500);
+	
+	std::map<Airport, std::pair<double, std::list<Airport>>> result1 = airline.min_price_path(ports[0]);
+	print_result(result1);
+	std::map<Airport, std::pair<double, std::list<Airport>>> result2 = airline.min_distance_path(ports[0]);
+	print_result(result2);
+	return 0;
+}
+```
