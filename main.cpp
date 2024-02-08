@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 
 #include "queue.cpp"
 #include "time.h"
@@ -8,42 +9,16 @@
 using namespace std;
 
 void display(Airline airline);
+void print_result(std::map<Airport, std::pair<double, std::list<Airport>>> result);
 
 int main() {
 	 /*///////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////
    //////////////////                           ///////////////////////////
-  //////////////////DIRECT NETWORK OF AIRPORTS///////////////////////////
+  //////////////////                           ///////////////////////////
   \\\\\\\\\\\\\\\\\\                           \\\\\\\\\\\\\\\\\\\\\\\\\\\
    \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/        
-
-	/*Queue<int> numQueue;
-	numQueue.enqueue(1);
-	numQueue.enqueue(4);
-	numQueue.enqueue(2);
-	numQueue.enqueue(3);
-
-	if (numQueue.contains(1))
-		cout << "True\n";
-	cout << numQueue.getFront() << endl;
-	numQueue.dequeue();
-	cout << numQueue.getFront() << endl;
-	numQueue.dequeue();
-	numQueue.dequeue();
-	numQueue.dequeue();
-	numQueue.dequeue();
-	numQueue.dequeue();
-	cout << numQueue.getFront() << "  " << numQueue.getSize() << endl;
-	
-	system("pause");*/
-
-	//Location l("Ethiopia", "Addis Ababa");
-	//cout << l.getCountry() << endl;
-
-	//Airport a("BOLE001", "Bolie Interanational Airport", l);
-	//l = a.getLocation();
-	//cout << a.getLocation().getCity() << endl;
+	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/      
 
 	Airport ports[] = { Airport("ET0", "Bole Int. Airport", Location("Ethiopia", "Addis Ababa")),
 						Airport("ET1", "Bahirdar Airport", Location("Ethiopia", "Bahirdar")),
@@ -63,9 +38,6 @@ int main() {
 	Time t1(1, 30);
 	Time t2(3, 30);
 	Time t3(1, 00);
-
-	//std::cout << t << std::endl;
-
 
 	airline.addRoute(ports[0], ports[1], t, 550, 3500);
 	airline.addRoute(ports[0], ports[2], t1, 450, 2000);
@@ -98,15 +70,41 @@ int main() {
 
 	/*  Test#4  Dijsktras algorithm to find the min distances from the origin to all node( airports)*/
 
-	std::unordered_map<Airport, double> distancesFrom = airline.min_distanceFrom(ports[0]);
+	/*std::map<Airport, double> distancesFrom = airline.min_distanceFrom(ports[3]);
 
-	//for (const auto& pair : distancesFrom)
-	//	std::cout << "To: " << pair.first.getCode() << ", Distance: " << pair.second << std::endl;
+	for (const auto& pair : distancesFrom)
+		std::cout << "To: " << pair.first.getCode() << ", Distance: " << pair.second << std::endl;
 	
+	*/
+
+
+	/*  Test#5  Dijsktras algorithm to find the min distances from the origin to all node( airports) with paths*/
+	std::map<Airport, std::pair<double, std::list<Airport>>> result1 = airline.min_price_path(ports[0]);
+	print_result(result1);
+	std::map<Airport, std::pair<double, std::list<Airport>>> result2 = airline.min_distance_path(ports[0]);
+	print_result(result2);
+
+
+
 	system("pause");
 	return 0;
 }
 
+void print_result(std::map<Airport, std::pair<double, std::list<Airport>>> result) {
+	for (const auto& entry : result) {
+		const Airport& airport = entry.first;
+		const double distance = entry.second.first;
+		const std::list<Airport>& path = entry.second.second;
+
+		std::cout << "Airport: " << airport.getCode() << ", Distance: " << distance << ", Path: ";
+		for (const Airport& stop : path) {
+			std::cout << stop.getCode();
+			if (!(stop == path.back()))
+				std::cout << " --> ";
+		}
+		std::cout << std::endl;
+	}
+}
 void display(Airline airline) {
 	//Test
 		for (auto& pair : airline.getPortNets()) {

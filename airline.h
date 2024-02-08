@@ -8,14 +8,13 @@
 #include "time.h"
 #include "airport.h"
 #include "route.h"
-#include <unordered_map>
-
-
 
 class Airline {
 private:
 	std::string name;
 	std::map<Airport, std::list<Route>> port_network;
+
+	std::map<Airport, std::pair<double, std::list<Airport>>> dijkstra_Optimum(const char _param, const Airport& origin);
 public:
 	Airline(std::string name);
 
@@ -31,11 +30,11 @@ public:
 	void removeRoute(Airport& destination);
 	const std::list<Airport> getAllPossiblePorts(const Airport& origin);	// 
 
-	std::unordered_map<Airport, double> min_distanceFrom(const Airport& origin) const; // Minim cost
-	//void findOptimumPrice(Airport origin, Airport destination); // Minimize price
-	//void findOptimumPath(Airport origin, Airport destination); // Minimize distance and cost
-	//void printAllPossibleRoutes();  // Network of airports that the airline operates on
-
+	std::map<Airport, double> min_distanceFrom(const Airport& origin); // Minim cost
+	std::map<Airport, std::pair<double, std::list<Airport>>> min_distance_path(const Airport& origin);
+	std::map<Airport, std::pair<double, std::list<Airport>>> min_price_path(const Airport& origin);
+	
+	
 	void print_airLines();
 };
 
