@@ -2,7 +2,10 @@
 
 ## Overview
 
-Flight Route Planner is a C++ project that implements various functionalities related to airline route planning. The project includes classes for representing airports (`Airport`), routes between airports (`Route`), and an airline network (`Airline`). It utilizes Dijkstra's algorithm to find the shortest paths between airports based on the distances provided in the `Route` class, the optimum price to travel based on the prices set for each route and uses the map abstract data type to represent (model) network of routes using the adjacency list representation of graph.
+Flight Route Planner is a moderate C++ project implemented by our team (INNOV8).  This project mainly implements main functionalities related to airline route planning. The project includes classes for representing airports (Airport), routes between airports (Route), an airline network (Airline), the aircraft class to represent the aircrafts. The main data structure we used to develop this system is a Undirected Graph data structure to better represent what is on the ground. 
+This system utilizes Dijkstra's algorithm to find the shortest (optimum) paths between airports based on the data presented in the Route class, the optimum price to travel based on the prices set for each route.
+Below we will discuss the structure of the system, especially the classes.
+
 
 ## Classes
 
