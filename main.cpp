@@ -15,7 +15,7 @@ int main() {
 	 /*///////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////
    //////////////////                           ///////////////////////////
-  //////////////////                           ///////////////////////////
+  ////////////////// Welcome to Flight Route Planner ///////////////////////////
   \\\\\\\\\\\\\\\\\\                           \\\\\\\\\\\\\\\\\\\\\\\\\\\
    \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/      
@@ -44,16 +44,24 @@ int main() {
 	airline.addRoute(ports[1], ports[2], t2, 300, 3500);
 	airline.addRoute(ports[1], ports[4], t1, 450, 2000);
 	airline.addRoute(ports[2], ports[3], t3, 100, 5500);
+
+	/*std::list<Route> r = airline.getPortDetail(ports[2]);
+	for (auto a : r)
+		cout << a.getDestination().getCode() << endl;
+	system("pause");*/
 	//airline.addRoute(ports[3], ports[2], t3, 100, 5500);
 
-	/*	Test#2
 	
-	cout << "Before removing ports[0]\n\n";
-	display(airline);
-	airline.removeRoute(ports[0]);
-	cout << "After removing ports[0]\n\n";
-	display(airline);*/
-
+	
+	//Test#2
+	//
+	//cout << "Before removing ports[0]\n\n";
+	//display(airline);
+	//airline.removeAirport(ports[0]);
+	////airline.removeRoute(ports[0]);
+	//cout << "After removing ports[0]\n\n";
+	//display(airline);
+	//system("pause");
 
 
 
@@ -96,7 +104,7 @@ void print_result(std::map<Airport, std::pair<double, std::list<Airport>>> resul
 		const double distance = entry.second.first;
 		const std::list<Airport>& path = entry.second.second;
 
-		std::cout << "Airport: " << airport.getCode() << ", Distance: " << distance << ", Path: ";
+		std::cout << "Destination Airport: " << airport.getCode() << ", Distance: " << distance << ", Path: ";
 		for (const Airport& stop : path) {
 			std::cout << stop.getCode();
 			if (!(stop == path.back()))

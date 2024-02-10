@@ -24,9 +24,5 @@ public:
 	bool operator < (const Airport& anotherAirport) const;
 	void display_airport_datails() const;
 	bool equals(const Airport& anotherAirport);
-
-	/*void addRoute(Airport newDestination, double distance, double altitude, double fuelConsumption, double price);
-	void removeRoute(Airport destination);
-	std::list<Route> getRoutes();*/
 };
 

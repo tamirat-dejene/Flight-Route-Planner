@@ -11,22 +11,21 @@
 #include "queue.cpp"
 
 Airline::Airline(std::string name) : name(name) {
-	/*															
-		| -- -- -- -- --[A - Y - Z - O - N] -- -- -- -- -- |
-	 															*/
+	/*	0x0000000000   */
 }
 
 void Airline::addAirport(const Airport& newPort) {
-	if (port_network.find(newPort) != port_network.end())
-		port_network.insert(std::make_pair(newPort, std::list<Route>()));
-	// To the list, not to the network of airports
+	/*if (port_network.find(newPort) == port_network.end())
+		port_network.insert(std::make_pair(newPort, std::list<Route>()));*/
+	port_network[newPort] = std::list<Route>();
 }
 
 void Airline::removeAirport(Airport& thisOne) {
-	if (port_network.find(thisOne) != port_network.end())
+	if (port_network.find(thisOne) != port_network.end()) {
 		port_network.erase(thisOne);
-	removeRoute(thisOne); // remove from the value map
-	// Remove from the airports map
+		removeRoute(thisOne); // remove from the value map
+		// Remove from the airports map
+	}
 }
 
 const std::list<Route> Airline::getPortDetail(Airport& port) {
@@ -46,7 +45,9 @@ void Airline::addRoute(const Airport& origin, const Airport& destination, Time f
 		///cout << "KEY-NOT-FOUND..." << endl;
 		std::list<Route> routes;
 		routes.push_back(r);
-		port_network.insert(std::make_pair(origin, routes));
+	//	port_network.insert(std::make_pair(origin, routes));  // or
+		port_network.insert({ origin, routes });
+
 	}
 	else {
 		std::list<Route> routes = iter->second;
@@ -67,10 +68,10 @@ void Airline::addRoute(const Airport& origin, const Airport& destination, Time f
 void Airline::removeRoute(Airport& destination) {
 	// Lambda expression: removes from the values when the values destination data field satisfies the condition
 	for (auto& keys : port_network)
-		keys.second.remove_if([destination](Route r) { return r.getDestination() == destination; });
+		keys.second.remove_if([&destination](Route r) -> bool { return r.getDestination() == destination || r.getDeparture() == destination; });
 }
 
-const std::list<Airport> Airline::getAllPossiblePorts(const Airport& origin) {
+const std::list<Airport> Airline::allAirportEntries(const Airport& origin) {
 	// Breadth first search using queue to find all tge ports on the network
 	std::list<Airport> visited;
 	visited.push_back(origin);
@@ -99,10 +100,12 @@ const std::list<Airport> Airline::getAllPossiblePorts(const Airport& origin) {
 }
 
 std::map<Airport, double> Airline::min_distanceFrom(const Airport& origin) {
+	if (port_network.find(origin) == port_network.end()) return{};
+
 	std::map<Airport, double> distance;
 	std::priority_queue<std::pair<double, Airport>, std::vector<std::pair<double, Airport>>, std::greater<>> pq;	// Min-heap
 
-	std::list<Airport> airp = getAllPossiblePorts(origin);
+	std::list<Airport> airp = allAirportEntries(origin);
 	for(const Airport& a : airp)
 		distance[a] = std::numeric_limits<double>::max();
 
@@ -154,10 +157,14 @@ void Airline::print_airLines() {
 }
 
 std::map<Airport, std::pair<double, std::list<Airport>>> Airline::dijkstra_Optimum(const char _param, const Airport& origin) {
+	if (port_network.find(origin) == port_network.end()) return{};
+	// stores the optimum values
 	std::map<Airport, std::pair<double, std::list<Airport>>> optimum;
+
+
 	std::priority_queue<std::pair<double, std::list<Airport>>, std::vector<std::pair<double, std::list<Airport>>>, std::greater<>> pq;
 
-	std::list<Airport> ports = getAllPossiblePorts(origin);
+	std::list<Airport> ports = allAirportEntries(origin);
 	for (const Airport& a : ports)
 		optimum[a] = { std::numeric_limits<double>::max(), {} };
 

@@ -28,7 +28,7 @@ public:
 
 	void addRoute(const Airport& origin, const Airport& destination, Time flight_time, double distance, double price);	// Brand new direct route
 	void removeRoute(Airport& destination);
-	const std::list<Airport> getAllPossiblePorts(const Airport& origin);	// 
+	const std::list<Airport> allAirportEntries(const Airport& origin);	// 
 
 	std::map<Airport, double> min_distanceFrom(const Airport& origin); // Minim cost
 	std::map<Airport, std::pair<double, std::list<Airport>>> min_distance_path(const Airport& origin);
